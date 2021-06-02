@@ -16,20 +16,26 @@ int	get_next_line(int fd, char **line)
 {
 	int		buf;
 	char	*bufch;
+	int		check;
 
 	buf = 0;
 	*line = malloc(1);
 	while (1)
 	{
 		bufch = get_block(fd);
-		if (check_new_line(bufch))
+		check = check_simbols(bufch);
+		if (check == 1)
 		{
 			*line = my_strjoin(*line, bufch);
 			break;
 		}
-		*line = my_strjoin(*line, bufch);
-		if (bufch == 0)
+		else if (check == 2)
+			*line = my_strjoin(*line, bufch);
+		else
+		{
+			*line = my_strjoin(*line, bufch);
 			return (0);
+		}
 	}
 	return (1);
 }

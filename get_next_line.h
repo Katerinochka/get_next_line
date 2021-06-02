@@ -29,7 +29,7 @@ typedef struct s_read_inform
 
 size_t			my_strlen(char *str);
 
-int				check_new_line(char *str);
+int				check_simbols(char *str);
 
 char			*get_block(int fd);
 

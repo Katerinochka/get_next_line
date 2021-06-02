@@ -7,8 +7,12 @@ int	main()
 	char	*str;
 
 	fp = open("my.txt", O_RDONLY);
-	printf("%d\n", get_next_line(0, &str));
-	printf("%s", str);
+	while (get_next_line(fp, &str))
+	{
+		printf("%s\n", str);
+	}
 	/*printf("%d\n", get_next_line(fp, &str));
+	printf("%s\n", str);
+	printf("%d\n", get_next_line(fp, &str));
 	printf("%s", str);*/
 }

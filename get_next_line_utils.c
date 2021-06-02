@@ -51,7 +51,7 @@ size_t	my_strlen(char *str)
 	return (i);
 }
 
-int	check_new_line(char *str)
+int	check_simbols(char *str)
 {
 	size_t	i;
 
@@ -60,9 +60,11 @@ int	check_new_line(char *str)
 	{
 		if (str[i] == 10)
 			return (1);
+		if (str[i] == 3)
+			return (0);
 		i++;
 	}
-	return (0);
+	return (2);
 }
 
 char	*get_block(int fd)
@@ -79,16 +81,16 @@ char	*get_block(int fd)
 	while (i < BUFFER_SIZE && flag)
 	{
 		rtrn_read = read(fd, &buf, 1);
-		if (rtrn_read == 0 || buf == 10)
+		if (rtrn_read == 0)
 		{
+			buf = 3;
 			flag = 0;
-			i--;
 		}
+		if (buf == 10)
+			flag = 0;
 		bufch[i] = buf;
 		i++;
 	}
-	if (i == 0)
-		return (0);
 	bufch[i] = 0;
 	return (bufch);
 }
@@ -129,7 +131,7 @@ char	*my_strjoin(char *s1, char *s2)
 		rez[i] = s1[i];
 		i++;
 	}
-	while (s2[j] != 0 && s2[j] != 10)
+	while (s2[j] != 0 && s2[j] != 10 && s2[j] != 3)
 	{
 		rez[i + j] = s2[j];
 		j++;
