@@ -17,14 +17,26 @@
 # include <unistd.h>
 # include <stdlib.h>
 
-char	get_char(int fd);
+typedef struct s_read_inform
+{
+	int		code;
+	int		size;
+	char	*str;
+}				t_ri;
 
-size_t	get_size_str(int fd);
 
-int		get_block(int fd, char **str);
+//int		get_block(int fd, char **str);
 
-void	*my_realloc(void *ptr, size_t len);
+size_t			my_strlen(char *str);
 
-int		get_next_line(int fd, char **line);
+int				check_new_line(char *str);
+
+char			*get_block(int fd);
+
+char			*my_realloc(void *ptr, size_t len);
+
+int				get_next_line(int fd, char **line);
+
+char			*my_strjoin(char *s1, char *s2);
 
 #endif

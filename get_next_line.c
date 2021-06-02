@@ -15,18 +15,21 @@
 int	get_next_line(int fd, char **line)
 {
 	int		buf;
-	int		bufbuf;
+	char	*bufch;
 
 	buf = 0;
-	bufbuf = 0;
-	line = malloc(BUFFER_SIZE + 1);
+	*line = malloc(1);
 	while (1)
 	{
-		bufbuf = get_block(fd, line);
-		buf += bufbuf;
-		line = my_realloc(line, buf);
-		if (bufbuf == 0)
+		bufch = get_block(fd);
+		if (check_new_line(bufch))
+		{
+			*line = my_strjoin(*line, bufch);
 			break;
+		}
+		*line = my_strjoin(*line, bufch);
+		if (bufch == 0)
+			return (0);
 	}
 	return (1);
 }
