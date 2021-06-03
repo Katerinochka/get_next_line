@@ -12,35 +12,6 @@
 
 #include "get_next_line.h"
 
-/*int	get_block(int fd, char **str)
-{
-	size_t	i;
-	char	buf;
-	int		rtrn_read;
-	int		flag;
-	char	*bufch;
-
-	i = 0;
-	bufch = malloc(BUFFER_SIZE + 1);
-	flag = 1;
-	while (i < BUFFER_SIZE && flag)
-	{
-		rtrn_read = read(fd, &buf, 1);
-		//printf("%d %d\n", buf, rtrn_read);
-		//printf("%c", buf);
-		if (rtrn_read == 0 || buf == 10)
-			flag = 0;
-		bufch[i] = buf; 
-		i++;
-	}
-	bufch[i] = 0;
-	//printf("%s", bufch);
-	str = malloc(i);
-	*str = bufch;
-	printf("%s", *str);
-	return (i);
-}*/
-
 size_t	my_strlen(char *str)
 {
 	size_t	i;
@@ -51,69 +22,55 @@ size_t	my_strlen(char *str)
 	return (i);
 }
 
-int	check_simbols(char *str)
+int	check(char *str, int *i)
 {
-	size_t	i;
-
-	i = 0;
-	while (str[i])
+	while (str[*i] != 3)
 	{
-		if (str[i] == 10)
+		if (str[*i] == 10)
+		{
+			(*i)++;
 			return (1);
-		if (str[i] == 3)
+		}
+		if (str[*i] == 0)
 			return (0);
-		i++;
+		(*i)++;
 	}
 	return (2);
 }
 
-char	*get_block(int fd)
+char	*my_read(int fd)
 {
-	size_t	i;
-	char	buf;
-	int		rtrn_read;
-	int		flag;
 	char	*bufch;
+	int		rtrn_read;
 
-	i = 0;
 	bufch = malloc(BUFFER_SIZE + 1);
-	flag = 1;
-	while (i < BUFFER_SIZE && flag)
+	rtrn_read = read(fd, bufch, BUFFER_SIZE);
+	if (rtrn_read == -1)
 	{
-		rtrn_read = read(fd, &buf, 1);
-		if (rtrn_read == 0)
-		{
-			buf = 3;
-			flag = 0;
-		}
-		if (buf == 10)
-			flag = 0;
-		bufch[i] = buf;
-		i++;
+		if (bufch)
+			free(bufch);
+		return (NULL);
 	}
-	bufch[i] = 0;
+	bufch[BUFFER_SIZE] = 3;
 	return (bufch);
 }
 
-char	*my_realloc(void *ptr, size_t len)
+/*int	my_switch(char **bufch, int &begin_index)
 {
-	char	*real;
-	size_t	i;
+	int code;
 
-	real = malloc(len);
-	i = 0;
-	if (real)
+	code = check(*bufch, *begin_index);
+	if (code == 0)
 	{
-		while (*((char *)ptr + i) != 0 || *((char *)ptr + i) != 10)
-		{
-			*((char *)real + i) = *((char *)ptr + i);
-			i++;
-		}
+		*bufch = NULL;
 	}
-	*((char *)real + i) = 0;
-	free(ptr);
-	return (real);
-}
+	if (code == 2)
+	{
+		*bufch = NULL;
+		*begin_index = 0;
+	}
+	return (code);
+}*/
 
 char	*my_strjoin(char *s1, char *s2)
 {
@@ -131,6 +88,7 @@ char	*my_strjoin(char *s1, char *s2)
 		rez[i] = s1[i];
 		i++;
 	}
+	free(s1);
 	while (s2[j] != 0 && s2[j] != 10 && s2[j] != 3)
 	{
 		rez[i + j] = s2[j];

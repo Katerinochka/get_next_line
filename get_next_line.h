@@ -17,23 +17,13 @@
 # include <unistd.h>
 # include <stdlib.h>
 
-typedef struct s_read_inform
-{
-	int		code;
-	int		size;
-	char	*str;
-}				t_ri;
-
-
-//int		get_block(int fd, char **str);
-
 size_t			my_strlen(char *str);
 
-int				check_simbols(char *str);
+int				check(char *str, int *i);
 
-char			*get_block(int fd);
+//int				my_switch(char *bufch, int &begin_index);
 
-char			*my_realloc(void *ptr, size_t len);
+char			*my_read(int fd);
 
 int				get_next_line(int fd, char **line);
 

@@ -1,2 +1,4 @@
-qwertyuiqwertyijhjgfghj789456123456123788
-78787878787
+qwertyuiqwertyijhjgfghj78945612345612378
+fgxndyh  tydj
+qwertyu
+gcc -Wall -Werror -Wextra -D BUFFER_SIZE=100 main.c get_next_line.c get_next_line_utils.c
