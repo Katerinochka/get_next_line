@@ -12,6 +12,15 @@
 
 #include "get_next_line.h"
 
+char	*my_malloc(void)
+{
+	char	*buf;
+
+	buf = malloc(1);
+	buf[0] = 0;
+	return (buf);
+}
+
 int	get_next_line(int fd, char **line)
 {
 	static char	bufch[BUFFER_SIZE + 1];
@@ -25,7 +34,7 @@ int	get_next_line(int fd, char **line)
 		if (rtrn_read == -1 || BUFFER_SIZE <= 0 || (!line))
 			return (-1);
 	}
-	*line = malloc(1);
+	*line = my_malloc();
 	while (1)
 	{
 		*line = my_strjoin(*line, &bufch[begin_index]);
