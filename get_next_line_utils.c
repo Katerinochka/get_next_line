@@ -52,6 +52,7 @@ int	my_read(int fd, char *bufch)
 	if (rtrn_read == -1)
 		return (-1);
 	bufch[BUFFER_SIZE] = 3;
+	//printf("\n---%s-----%d---\n", bufch, bufch[1]);
 	return (1);
 }
 

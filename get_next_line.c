@@ -29,7 +29,7 @@ int	get_next_line(int fd, char **line)
 		code = check(&bufch[0], &begin_index);
 		if (code != 2)
 		{
-			if (code == 0)
+			if (code == 0 || begin_index == 0)
 				my_zero(bufch);
 			return (code);
 		}
