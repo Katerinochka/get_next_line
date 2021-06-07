@@ -12,53 +12,29 @@
 
 #include "get_next_line.h"
 
-/*int	get_next_line(int fd, char **line)
-{
-	char	*bufch;
-	int		check;
-
-	*line = malloc(1);
-	while (1)
-	{
-		bufch = get_block(fd, 1);
-		if (!bufch)
-			return (-1);
-		*line = my_strjoin(*line, bufch);
-		if (!line)
-			return (-1);
-		check = check_simbols(bufch);
-		if (check == 1)
-			break ;
-		if (check == 0)
-			return (0);
-	}
-	return (1);
-}*/
-
 int	get_next_line(int fd, char **line)
 {
-	static char	*bufch;
+	static char	bufch[BUFFER_SIZE + 1];
 	static int	begin_index = 0;
 	static int	code;
+	static int	rtrn_read;
 
+	rtrn_read = my_read(fd, bufch);
+	if (rtrn_read == -1 || BUFFER_SIZE <= 0 || (!line))
+		return (-1);
 	*line = malloc(1);
-	while (1)
+	while (rtrn_read)
 	{
-		if (bufch == NULL)
-		{
-			bufch = my_read(fd);
-			if (!bufch)
-				return (-1);
-		}
 		*line = my_strjoin(*line, &bufch[begin_index]);
-		code = check(&bufch[begin_index], &begin_index);
+		code = check(&bufch[0], &begin_index);
 		if (code != 2)
 		{
 			if (code == 0)
-				bufch = NULL;
+				my_zero(bufch);
 			return (code);
 		}
-		bufch = NULL;
-		begin_index = 0;
+		my_zero(bufch);
+		rtrn_read = my_read(fd, bufch);
 	}
+	return (0);
 }

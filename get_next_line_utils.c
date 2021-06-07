@@ -17,7 +17,7 @@ size_t	my_strlen(char *str)
 	size_t	i;
 
 	i = 0;
-	while (str[i])
+	while (str[i] && str[i] != 10 && str[i] != 3)
 		i++;
 	return (i);
 }
@@ -29,48 +29,43 @@ int	check(char *str, int *i)
 		if (str[*i] == 10)
 		{
 			(*i)++;
+			if (str[*i] == 3)
+				(*i) = 0;
 			return (1);
 		}
 		if (str[*i] == 0)
+		{
+			(*i) = 0;
 			return (0);
+		}
 		(*i)++;
 	}
+	(*i) = 0;
 	return (2);
 }
 
-char	*my_read(int fd)
+int	my_read(int fd, char *bufch)
 {
-	char	*bufch;
 	int		rtrn_read;
 
-	bufch = malloc(BUFFER_SIZE + 1);
 	rtrn_read = read(fd, bufch, BUFFER_SIZE);
 	if (rtrn_read == -1)
-	{
-		if (bufch)
-			free(bufch);
-		return (NULL);
-	}
+		return (-1);
 	bufch[BUFFER_SIZE] = 3;
-	return (bufch);
+	return (1);
 }
 
-/*int	my_switch(char **bufch, int &begin_index)
+void	my_zero(char *str)
 {
-	int code;
+	size_t	i;
 
-	code = check(*bufch, *begin_index);
-	if (code == 0)
+	i = 0;
+	while (i < BUFFER_SIZE + 1)
 	{
-		*bufch = NULL;
+		str[i] = 0;
+		i++;
 	}
-	if (code == 2)
-	{
-		*bufch = NULL;
-		*begin_index = 0;
-	}
-	return (code);
-}*/
+}
 
 char	*my_strjoin(char *s1, char *s2)
 {

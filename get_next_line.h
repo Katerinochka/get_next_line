@@ -13,6 +13,10 @@
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 1
+# endif
+
 # include <stdio.h>
 # include <unistd.h>
 # include <stdlib.h>
@@ -21,9 +25,9 @@ size_t			my_strlen(char *str);
 
 int				check(char *str, int *i);
 
-//int				my_switch(char *bufch, int &begin_index);
+void			my_zero(char *str);
 
-char			*my_read(int fd);
+int				my_read(int fd, char *str);
 
 int				get_next_line(int fd, char **line);
 
