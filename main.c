@@ -8,12 +8,7 @@ int	main()
 	char	*str, *str1, *str2;
 
 	fp = open("my.txt", O_RDONLY);
-	/*while (get_next_line(fp, &str))
-	{
-		printf("%s\n", str);
-	}*/
 	printf("%d\n", get_next_line(fp, &str));
-	//printf("%lu\n", strlen(str));
 	printf("%s\n", str);
 	printf("%d\n", get_next_line(fp, &str1));
 	printf("%s\n", str1);

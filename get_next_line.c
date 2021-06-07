@@ -19,11 +19,14 @@ int	get_next_line(int fd, char **line)
 	static int	code;
 	static int	rtrn_read;
 
-	rtrn_read = my_read(fd, bufch);
-	if (rtrn_read == -1 || BUFFER_SIZE <= 0 || (!line))
-		return (-1);
+	if (!my_strlen(bufch))
+	{
+		rtrn_read = my_read(fd, bufch);
+		if (rtrn_read == -1 || BUFFER_SIZE <= 0 || (!line))
+			return (-1);
+	}
 	*line = malloc(1);
-	while (rtrn_read)
+	while (1)
 	{
 		*line = my_strjoin(*line, &bufch[begin_index]);
 		code = check(&bufch[0], &begin_index);
@@ -36,5 +39,4 @@ int	get_next_line(int fd, char **line)
 		my_zero(bufch);
 		rtrn_read = my_read(fd, bufch);
 	}
-	return (0);
 }
