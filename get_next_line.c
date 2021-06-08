@@ -25,10 +25,10 @@ int	get_next_line(int fd, char **line)
 {
 	static char	bufch[BUFFER_SIZE + 1];
 	static int	begin_index = 0;
-	static int	code;
+	static int	code = 0;
 	static int	rtrn_read;
 
-	if (!my_strlen(bufch))
+	if (code == 2 || code == 0 || begin_index == 0)
 	{
 		rtrn_read = my_read(fd, bufch);
 		if (rtrn_read == -1 || BUFFER_SIZE <= 0 || (!line))
